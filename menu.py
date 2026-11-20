@@ -1,5 +1,6 @@
 """Menus e navegação do sistema (RF01)."""
 
+import capacidade
 import estoque
 import estrutura
 import itens
@@ -61,6 +62,12 @@ def menu_cadastros(dados):
         elif opcao == 4:
             menu_estrutura(dados)
             continue
+        elif opcao == 5:
+            menu_centros(dados)
+            continue
+        elif opcao == 6:
+            menu_roteiros(dados)
+            continue
         else:
             print("Opção em construção.")
         utils.pausar()
@@ -109,4 +116,47 @@ def menu_estoque(dados):
             estoque.consultar_kardex(dados)
         elif opcao == 3:
             estoque.listar_posicao(dados)
+        utils.pausar()
+
+
+def menu_centros(dados):
+    """Exibe o submenu de centros de trabalho (RF06)."""
+    while True:
+        print()
+        utils.exibir_titulo("CENTROS DE TRABALHO")
+        print(" 1. Cadastrar centro")
+        print(" 2. Listar centros")
+        print(" 3. Alterar centro")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 3)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            capacidade.cadastrar_centro(dados)
+        elif opcao == 2:
+            capacidade.listar_centros(dados)
+        elif opcao == 3:
+            capacidade.alterar_centro(dados)
+        utils.pausar()
+
+
+def menu_roteiros(dados):
+    """Exibe o submenu de roteiros (RF06)."""
+    while True:
+        print()
+        utils.exibir_titulo("ROTEIROS")
+        print(" 1. Definir roteiro de um item")
+        print(" 2. Listar roteiros")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 2)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            capacidade.definir_roteiro(dados)
+        elif opcao == 2:
+            capacidade.listar_roteiros(dados)
         utils.pausar()
