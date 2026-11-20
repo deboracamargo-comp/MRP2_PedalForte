@@ -1,5 +1,6 @@
 """Menus e navegação do sistema (RF01)."""
 
+import estoque
 import estrutura
 import itens
 import utils
@@ -27,6 +28,8 @@ def exibir_menu_principal(dados):
             break
         elif opcao == 1:
             menu_cadastros(dados)
+        elif opcao == 2:
+            menu_estoque(dados)
         else:
             print("Opção em construção.")
             utils.pausar()
@@ -83,4 +86,27 @@ def menu_estrutura(dados):
             estrutura.remover_componente(dados)
         elif opcao == 3:
             estrutura.exibir_estrutura(dados)
+        utils.pausar()
+
+
+def menu_estoque(dados):
+    """Exibe o submenu de estoque (RF04, RF05)."""
+    while True:
+        print()
+        utils.exibir_titulo("ESTOQUE")
+        print(" 1. Registrar movimentação (entrada, saída, ajuste)")
+        print(" 2. Consultar saldo e kardex de um item")
+        print(" 3. Posição de estoque (todos os itens)")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 3)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            estoque.registrar_movimentacao(dados)
+        elif opcao == 2:
+            estoque.consultar_kardex(dados)
+        elif opcao == 3:
+            estoque.listar_posicao(dados)
         utils.pausar()
