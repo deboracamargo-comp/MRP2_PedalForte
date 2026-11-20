@@ -1,5 +1,6 @@
 """Menus e navegação do sistema (RF01)."""
 
+import estrutura
 import itens
 import utils
 
@@ -54,6 +55,32 @@ def menu_cadastros(dados):
             itens.listar_itens(dados)
         elif opcao == 3:
             itens.alterar_item(dados)
+        elif opcao == 4:
+            menu_estrutura(dados)
+            continue
         else:
             print("Opção em construção.")
+        utils.pausar()
+
+
+def menu_estrutura(dados):
+    """Exibe o submenu da estrutura de produto (BOM)."""
+    while True:
+        print()
+        utils.exibir_titulo("ESTRUTURA DE PRODUTO (BOM)")
+        print(" 1. Adicionar componente (ou alterar quantidade)")
+        print(" 2. Remover componente")
+        print(" 3. Exibir estrutura (explosão da BOM)")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 3)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            estrutura.adicionar_componente(dados)
+        elif opcao == 2:
+            estrutura.remover_componente(dados)
+        elif opcao == 3:
+            estrutura.exibir_estrutura(dados)
         utils.pausar()
