@@ -5,6 +5,8 @@ import estoque
 import estrutura
 import itens
 import mps
+import mrp
+import ordens
 import utils
 
 
@@ -34,6 +36,10 @@ def exibir_menu_principal(dados):
             menu_estoque(dados)
         elif opcao == 3:
             menu_mps(dados)
+        elif opcao == 4:
+            menu_mrp(dados)
+        elif opcao == 5:
+            menu_ordens(dados)
         else:
             print("Opção em construção.")
             utils.pausar()
@@ -162,4 +168,27 @@ def menu_roteiros(dados):
             capacidade.definir_roteiro(dados)
         elif opcao == 2:
             capacidade.listar_roteiros(dados)
+        utils.pausar()
+
+
+def menu_mps(dados):
+    """Exibe o submenu do Plano Mestre de Produção (RF07)."""
+    while True:
+        print()
+        utils.exibir_titulo("PLANO MESTRE DE PRODUÇÃO (MPS)")
+        print(" 1. Cadastrar MPS de um produto (8 semanas)")
+        print(" 2. Alterar demanda de uma semana")
+        print(" 3. Exibir MPS")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 3)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            mps.cadastrar_mps(dados)
+        elif opcao == 2:
+            mps.alterar_semana(dados)
+        elif opcao == 3:
+            mps.exibir_mps(dados)
         utils.pausar()
