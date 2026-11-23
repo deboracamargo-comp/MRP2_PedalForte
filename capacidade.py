@@ -1,8 +1,13 @@
-"""Centros de trabalho e roteiros de produção (RF06)."""
+"""Centros de trabalho, roteiros (RF06) e carga x capacidade - CRP
+(RF12, RN09)."""
 
 import itens
+import mps
 import persistencia
 import utils
+
+# Status das OPs que geram carga nos centros (ver README).
+STATUS_CARGA = ["PLANEJADA", "FIRME", "LIBERADA"]
 
 
 # ---------------------------------------------------------------------
@@ -171,3 +176,70 @@ def listar_roteiros(dados):
                       f"{centro:<8}{tempo:>13}")
     if total == 0:
         print("Nenhum item fabricado (PA ou SA) cadastrado.")
+
+
+# ---------------------------------------------------------------------
+# Carga x capacidade - CRP (RF12, RN09)
+# ---------------------------------------------------------------------
+
+def formatar_horas(valor):
+    """Formata horas com uma casa decimal: 15.0 vira '15,0'."""
+    return f"{valor:.1f}".replace(".", ",")
+
+
+def calcular_carga(dados, centro):
+    """Calcula a carga (em horas) de um centro em cada semana (RN09).
+
+    Carga = soma de (quantidade da OP x tempo unitário do roteiro) das
+    OPs com liberação naquela semana. OPs atrasadas (liberação antes da
+    semana 1) entram na semana 1.
+    """
+    carga = [0] * mps.HORIZONTE
+    for ordem in dados["ordens"].values():
+        if ordem["tipo"] != "OP" or ordem["status"] not in STATUS_CARGA:
+            continue
+        roteiro = obter_roteiro(dados, ordem["item"])
+        if roteiro is None or roteiro["centro"] != centro:
+            continue
+        semana = max(ordem["semana_liberacao"], 1)
+        if semana <= mps.HORIZONTE:
+            horas = ordem["quantidade"] * roteiro["tempo_unitario"]
+            carga[semana - 1] += horas
+    for semana in range(mps.HORIZONTE):
+        carga[semana] = round(carga[semana], 2)
+    return carga
+
+
+def exibir_crp(dados):
+    """Exibe a carga x capacidade de cada centro por semana, sinalizando
+    as semanas com sobrecarga (RF12)."""
+    utils.exibir_titulo("CARGA x CAPACIDADE (CRP)")
+    if not dados["centros"]:
+        print("Nenhum centro de trabalho cadastrado.")
+        return
+
+    for codigo in sorted(dados["centros"]):
+        centro = dados["centros"][codigo]
+        capacidade = centro["capacidade_horas"]
+        carga = calcular_carga(dados, codigo)
+
+        print(f"\nCARGA x CAPACIDADE - {codigo} {centro['descricao']} "
+              f"({formatar_horas(capacidade)} h/semana)")
+        print(f"{'Sem':<5}{'Carga(h)':>9}{'Uso(%)':>8}")
+        sobrecarga = []
+        for semana in range(1, mps.HORIZONTE + 1):
+            horas = carga[semana - 1]
+            uso = horas / capacidade * 100
+            barra = "#" * round(uso / 10)
+            linha = (f"{semana:<5}{formatar_horas(horas):>9}"
+                     f"{round(uso):>8} {barra}")
+            if horas > capacidade:
+                linha += " SOBRECARGA"
+                sobrecarga.append(str(semana))
+            print(linha)
+
+        if sobrecarga:
+            print(f"Sugestão: antecipar OPs ou programar hora extra nas "
+                  f"semanas {', '.join(sobrecarga)}.")
+        else:
+            print("Nenhuma semana com sobrecarga.")
