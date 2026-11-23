@@ -4,6 +4,7 @@ import capacidade
 import estoque
 import estrutura
 import itens
+import mps
 import utils
 
 
@@ -31,6 +32,8 @@ def exibir_menu_principal(dados):
             menu_cadastros(dados)
         elif opcao == 2:
             menu_estoque(dados)
+        elif opcao == 3:
+            menu_mps(dados)
         else:
             print("Opção em construção.")
             utils.pausar()
