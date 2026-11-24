@@ -1,12 +1,15 @@
 """Menus e navegação do sistema (RF01)."""
 
 import capacidade
+import custos
 import estoque
 import estrutura
+import graficos
 import itens
 import mps
 import mrp
 import ordens
+import relatorios
 import utils
 
 
@@ -23,9 +26,10 @@ def exibir_menu_principal(dados):
         print(" 6. Carga x capacidade (CRP)")
         print(" 7. Custo padrão dos produtos")
         print(" 8. Relatórios (exportar CSV)")
+        print(" 9. Gráficos de gestão")
         print(" 0. Sair")
         utils.exibir_linha()
-        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 8)
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 9)
 
         if opcao == 0:
             print("Encerrando o sistema. Até logo!")
@@ -40,9 +44,16 @@ def exibir_menu_principal(dados):
             menu_mrp(dados)
         elif opcao == 5:
             menu_ordens(dados)
-        else:
-            print("Opção em construção.")
+        elif opcao == 6:
+            capacidade.exibir_crp(dados)
             utils.pausar()
+        elif opcao == 7:
+            custos.exibir_custos(dados)
+            utils.pausar()
+        elif opcao == 8:
+            menu_relatorios(dados)
+        elif opcao == 9:
+            menu_graficos(dados)
 
 
 def menu_cadastros(dados):
@@ -77,8 +88,6 @@ def menu_cadastros(dados):
         elif opcao == 6:
             menu_roteiros(dados)
             continue
-        else:
-            print("Opção em construção.")
         utils.pausar()
 
 
@@ -191,4 +200,93 @@ def menu_mps(dados):
             mps.alterar_semana(dados)
         elif opcao == 3:
             mps.exibir_mps(dados)
+        utils.pausar()
+
+
+def menu_mrp(dados):
+    """Exibe o submenu do MRP (RF08, RF09)."""
+    while True:
+        print()
+        utils.exibir_titulo("MRP")
+        print(" 1. Executar MRP (gerar ordens planejadas)")
+        print(" 2. Exibir registro MRP de um item")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 2)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            mrp.executar_mrp(dados)
+        elif opcao == 2:
+            mrp.exibir_registro(dados)
+        utils.pausar()
+
+
+def menu_ordens(dados):
+    """Exibe as ordens e as ações do ciclo de status (RF10, RF11)."""
+    while True:
+        print()
+        ordens.listar_ordens(dados)
+        utils.exibir_linha()
+        print("[F] Firmar  [L] Liberar  [E] Encerrar OC  "
+              "[A] Apontar produção  [V] Voltar")
+        opcao = utils.ler_opcao("Escolha: ", ["F", "L", "E", "A", "V"])
+
+        if opcao == "V":
+            break
+        elif opcao == "F":
+            ordens.firmar_ordem(dados)
+        elif opcao == "L":
+            ordens.liberar_ordem(dados)
+        elif opcao == "E":
+            ordens.encerrar_compra(dados)
+        elif opcao == "A":
+            ordens.apontar_producao(dados)
+        utils.pausar()
+
+
+def menu_relatorios(dados):
+    """Exibe o submenu de exportação de relatórios em CSV (RF14)."""
+    while True:
+        print()
+        utils.exibir_titulo("RELATÓRIOS (EXPORTAR CSV)")
+        print(" 1. Exportar posição de estoque")
+        print(" 2. Exportar lista de ordens")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 2)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            relatorios.exportar_estoque(dados)
+        elif opcao == 2:
+            relatorios.exportar_ordens(dados)
+        utils.pausar()
+
+
+def menu_graficos(dados):
+    """Exibe o submenu de gráficos de gestão (RF16)."""
+    while True:
+        print()
+        utils.exibir_titulo("GRÁFICOS DE GESTÃO")
+        print(" 1. Posição de estoque (saldo x estoque de segurança)")
+        print(" 2. Estoque projetado de um item (MRP)")
+        print(" 3. Ordens por semana de entrega (OP x OC)")
+        print(" 4. Carga x capacidade de um centro")
+        print(" 0. Voltar")
+        utils.exibir_linha()
+        opcao = utils.ler_inteiro(" Escolha uma opção: ", 0, 4)
+
+        if opcao == 0:
+            break
+        elif opcao == 1:
+            graficos.grafico_posicao_estoque(dados)
+        elif opcao == 2:
+            graficos.grafico_estoque_projetado(dados)
+        elif opcao == 3:
+            graficos.grafico_ordens_por_semana(dados)
+        elif opcao == 4:
+            graficos.grafico_carga_capacidade(dados)
         utils.pausar()
