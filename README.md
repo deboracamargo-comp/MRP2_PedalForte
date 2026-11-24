@@ -1,7 +1,7 @@
 # MRP II — Pedal Forte Bicicletas
 
-Sistema de Planejamento dos Recursos de Manufatura (MRP II) em modo texto,
-desenvolvido em Python para a fábrica fictícia **Pedal Forte Bicicletas Ltda.**
+Sistema de Planejamento dos Recursos de Manufatura (MRP II) em modo texto e
+com interface gráfica (Tkinter), desenvolvido em Python para a fábrica fictícia **Pedal Forte Bicicletas Ltda.**
 (Divinópolis-MG). O sistema integra cadastro de itens, estrutura de produto
 (BOM), estoques, Plano Mestre de Produção (MPS), cálculo MRP, ordens de
 produção e de compra, carga x capacidade (CRP), custo padrão, relatórios CSV e
@@ -35,6 +35,9 @@ quando e se há capacidade para isso.**
 
 - Python **3.10 ou superior**
 - Biblioteca **matplotlib** (usada apenas nos gráficos, RF16)
+- **Tkinter**, apenas para a interface gráfica opcional. Ele já vem com o
+  Python no Windows; em algumas distribuições Linux é preciso instalar:
+  `sudo apt install python3-tk`
 
 No Linux:
 
@@ -46,9 +49,39 @@ python3 -m pip install -r requirements.txt
 
 ## 2. Como executar
 
+**Modo texto** (menus do enunciado):
+
 ```bash
 python3 main.py
 ```
+
+**Interface gráfica** (bônus RNF08):
+
+```bash
+python3 gui.py
+```
+
+As duas versões usam os mesmos dados da pasta `data/` e as mesmas funções de
+cálculo; a interface gráfica só muda a forma de mostrar e de digitar.
+
+### Interface gráfica
+
+Janela com menu lateral e 10 telas:
+
+| Tela | O que tem |
+|------|-----------|
+| Painel | Indicadores (itens abaixo do estoque de segurança, ordens em aberto e atrasadas, semanas com sobrecarga), gráfico do centro mais carregado e lista de alertas |
+| Itens | Tabela com busca, itens em alerta destacados e formulário de cadastro/alteração (RF02) |
+| Estrutura (BOM) | Explosão em árvore (recursiva) com níveis; inclusão e remoção de componentes, com a RN03 aplicada na própria lista de escolha (RF03) |
+| Estoque | Posição de estoque, formulário de entrada/saída/ajuste e kardex do item selecionado (RF04, RF05) |
+| Plano mestre (MPS) | Grade editável produto × semana e gráfico da demanda (RF07) |
+| MRP | Execução, registro do item escolhido, gráfico do estoque projetado e mensagens de exceção (RF08, RF09) |
+| Ordens | Filtros por status e tipo; firmar e liberar várias ordens de uma vez; encerrar OC; apontamento com conferência dos componentes (OK/FALTA) (RF10, RF11) |
+| Capacidade (CRP) | Gráfico e tabela de carga × capacidade por centro; cadastro de centros e roteiros (RF06, RF12) |
+| Custo padrão | Custo de todos os itens fabricados e composição (materiais + mão de obra) (RF13) |
+| Relatórios | Exportação CSV, geração de todos os gráficos em PNG e acesso à pasta `exports/` (RF14, RF16) |
+
+Todo gráfico da interface tem um botão **Salvar PNG**.
 
 Os dados da pasta `data/` são carregados automaticamente ao iniciar (RF15).
 Toda operação que altera dados grava os arquivos na hora, então nada se perde
@@ -77,6 +110,7 @@ MRP2_PedalForte/
 ├── graficos.py       # gráficos de gestão com matplotlib (RF16)
 ├── persistencia.py   # leitura e gravação de arquivos (RF15)
 ├── utils.py          # validação de entradas e formatação
+├── gui.py            # interface gráfica em Tkinter (bônus RNF08)
 ├── requirements.txt
 ├── data/             # base de demonstração (JSON + kardex em CSV)
 └── docs/
@@ -134,7 +168,7 @@ que lê e grava os arquivos de dados.
 | RNF05 | Todas as entradas passam pelas funções `ler_...` do `utils.py`, que repetem a pergunta até o valor ser válido; Ctrl+C encerra sem erro |
 | RNF06 | Execução validada em Linux |
 | RNF07 | Persistência em JSON (cadastros) e CSV (kardex) |
-| RNF08 | Cálculos de MRP, CRP, custos e estoques implementados no projeto; matplotlib usado só nos gráficos |
+| RNF08 | Cálculos de MRP, CRP, custos e estoques implementados no projeto; matplotlib usado só nos gráficos; interface gráfica opcional em Tkinter (`gui.py`) |
 | RNF09 | Base de demonstração com 2 PA, 2 SA, 10 MP e 3 centros (seção 7) |
 
 ## 7. Base de demonstração
@@ -241,8 +275,14 @@ Para voltar à base original depois de testar, restaure a pasta `data/` com
     unidades diferentes e não podem ser somadas).
 17. **Exportação CSV** com `;` e codificação `utf-8-sig`, para abrir
     corretamente no Excel em português.
-18. **Recursividade** usada na explosão da BOM (`estrutura.exibir_componentes`)
-    e no custo padrão (`custos.custo_padrao`).
+18. **Recursividade** usada na explosão da BOM (`estrutura.exibir_componentes`
+    e `gui.inserir_componentes`) e no custo padrão (`custos.custo_padrao`).
+19. **A interface gráfica reaproveita os módulos.** Ela não reimplementa o
+    MRP, o CRP, os custos nem as movimentações: chama as mesmas funções do
+    modo texto. As mensagens que essas funções imprimem são capturadas e
+    mostradas em janelas. Por ter muito estado entre um clique e outro, a
+    interface é organizada em uma classe (`AplicativoMRP`), o padrão do
+    Tkinter.
 
 ## 10. Persistência dos dados
 
