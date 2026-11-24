@@ -1,0 +1,128 @@
+{
+  "PA-001": {
+    "descricao": "Bicicleta Aro 29 MTB",
+    "tipo": "PA",
+    "unidade": "un",
+    "custo_unitario": 792.6,
+    "lead_time": 1,
+    "estoque_seguranca": 5,
+    "lote_minimo": 10
+  },
+  "PA-002": {
+    "descricao": "Bicicleta Aro 29 Urbana",
+    "tipo": "PA",
+    "unidade": "un",
+    "custo_unitario": 666.6,
+    "lead_time": 1,
+    "estoque_seguranca": 5,
+    "lote_minimo": 10
+  },
+  "SA-010": {
+    "descricao": "Quadro aro 29 soldado",
+    "tipo": "SA",
+    "unidade": "un",
+    "custo_unitario": 128.0,
+    "lead_time": 1,
+    "estoque_seguranca": 5,
+    "lote_minimo": 20
+  },
+  "SA-020": {
+    "descricao": "Roda aro 29 montada",
+    "tipo": "SA",
+    "unidade": "un",
+    "custo_unitario": 139.8,
+    "lead_time": 1,
+    "estoque_seguranca": 10,
+    "lote_minimo": 80
+  },
+  "MP-100": {
+    "descricao": "Tubo de aco carbono",
+    "tipo": "MP",
+    "unidade": "m",
+    "custo_unitario": 30.0,
+    "lead_time": 2,
+    "estoque_seguranca": 50,
+    "lote_minimo": 100
+  },
+  "MP-101": {
+    "descricao": "Tinta epoxi",
+    "tipo": "MP",
+    "unidade": "L",
+    "custo_unitario": 40.0,
+    "lead_time": 1,
+    "estoque_seguranca": 5,
+    "lote_minimo": 10
+  },
+  "MP-200": {
+    "descricao": "Aro 29 aluminio",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 50.0,
+    "lead_time": 2,
+    "estoque_seguranca": 20,
+    "lote_minimo": 100
+  },
+  "MP-201": {
+    "descricao": "Raio inox",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 1.5,
+    "lead_time": 1,
+    "estoque_seguranca": 300,
+    "lote_minimo": 2000
+  },
+  "MP-202": {
+    "descricao": "Pneu 29 x 2.20",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 25.8,
+    "lead_time": 2,
+    "estoque_seguranca": 20,
+    "lote_minimo": 50
+  },
+  "MP-300": {
+    "descricao": "Guidao MTB",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 45.0,
+    "lead_time": 1,
+    "estoque_seguranca": 10,
+    "lote_minimo": 30
+  },
+  "MP-301": {
+    "descricao": "Kit transmissao 12v",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 320.0,
+    "lead_time": 3,
+    "estoque_seguranca": 5,
+    "lote_minimo": 20
+  },
+  "MP-302": {
+    "descricao": "Guidao urbano",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 35.0,
+    "lead_time": 1,
+    "estoque_seguranca": 10,
+    "lote_minimo": 30
+  },
+  "MP-303": {
+    "descricao": "Kit transmissao 7v",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 180.0,
+    "lead_time": 2,
+    "estoque_seguranca": 5,
+    "lote_minimo": 20
+  },
+  "MP-304": {
+    "descricao": "Selim conforto",
+    "tipo": "MP",
+    "unidade": "un",
+    "custo_unitario": 28.0,
+    "lead_time": 1,
+    "estoque_seguranca": 10,
+    "lote_minimo": 40
+  }
+}

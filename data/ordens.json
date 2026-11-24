@@ -1,0 +1,20 @@
+{
+  "OC-0001": {
+    "tipo": "OC",
+    "item": "MP-202",
+    "quantidade": 50,
+    "semana_liberacao": -1,
+    "semana_entrega": 1,
+    "status": "LIBERADA",
+    "atrasada": true
+  },
+  "OP-0001": {
+    "tipo": "OP",
+    "item": "SA-020",
+    "quantidade": 50,
+    "semana_liberacao": 0,
+    "semana_entrega": 1,
+    "status": "FIRME",
+    "atrasada": true
+  }
+}

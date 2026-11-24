@@ -1,0 +1,17 @@
+{
+  "CT-01": {
+    "descricao": "Soldagem e pintura",
+    "capacidade_horas": 40.0,
+    "custo_hora": 36.0
+  },
+  "CT-02": {
+    "descricao": "Montagem de rodas",
+    "capacidade_horas": 40.0,
+    "custo_hora": 40.0
+  },
+  "CT-03": {
+    "descricao": "Montagem final",
+    "capacidade_horas": 16.0,
+    "custo_hora": 40.0
+  }
+}
