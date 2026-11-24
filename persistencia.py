@@ -21,6 +21,7 @@ ARQUIVOS_JSON = {
 }
 
 ARQUIVO_MOVIMENTOS = PASTA_DADOS / "movimentos.csv"
+PASTA_EXPORTACAO = Path(__file__).parent / "exports"
 CAMPOS_MOVIMENTO = ["data", "codigo", "tipo", "quantidade", "saldo",
                     "documento"]
 
@@ -105,3 +106,26 @@ def ler_movimentos(codigo=None):
     except FileNotFoundError:
         pass
     return movimentos
+
+
+def caminho_exportacao(nome_arquivo):
+    """Devolve o caminho de um arquivo na pasta exports/, criando a
+    pasta se ela não existir."""
+    PASTA_EXPORTACAO.mkdir(exist_ok=True)
+    return PASTA_EXPORTACAO / nome_arquivo
+
+
+def exportar_csv(nome_arquivo, campos, linhas):
+    """Grava uma lista de dicionários em um CSV na pasta exports/.
+
+    Usa ';' como separador e 'utf-8-sig' para que o Excel em português
+    abra o arquivo com as colunas e os acentos corretos. Devolve o
+    caminho do arquivo gravado.
+    """
+    caminho = caminho_exportacao(nome_arquivo)
+    with open(caminho, "w", encoding="utf-8-sig", newline="") as arquivo:
+        escritor = csv.DictWriter(arquivo, fieldnames=campos,
+                                  delimiter=";")
+        escritor.writeheader()
+        escritor.writerows(linhas)
+    return caminho
