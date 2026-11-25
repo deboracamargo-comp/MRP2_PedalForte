@@ -302,6 +302,6 @@ não são sobrescritos) e o sistema continua com o cadastro vazio.
 
 ## 11. Vídeos de demonstração
 
-- Demonstração do sistema em funcionamento: *(link do vídeo)*
+- Demonstração do sistema em funcionamento: https://youtu.be/_3SWiMlXsTw
 - Demonstração do código (arquitetura, estruturas de dados e decisões de
-  projeto): *(link do vídeo)*
+  projeto): https://youtu.be/jH6xE_AqJRc
